@@ -24,6 +24,95 @@ pnpm install
 pnpm run dev
 ```
 
+## Some Dependencies
+
+### Element Icons
+
+use mode.
+``` vue
+<template>
+ <el-icon color="#000" size="22">
+    <!-- 自动导入必须遵循名称格式 {prefix：默认为i}-{collection：图标集合的名称}-{icon：图标名称}  -->
+   <i-ep-edit />
+ </el-icon>
+</template>
+```
+
+install.
+``` bash
+# install
+pnpm install @element-plus/icons-vue
+
+```
+
+auto import.
+
+``` bash
+# install
+pnpm install -D unplugin-icons @types/node
+
+```
+
+``` typescript 
+import { resolve } from "path";
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import Icons from "unplugin-icons/vite";
+import IconsResolver from "unplugin-icons/resolver";
+import AutoImport from "unplugin-auto-import/vite";
+import Components from "unplugin-vue-components/vite";
+import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
+import Inspect from "vite-plugin-inspect";
+
+const pathSrc = resolve(__dirname, "src");
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  resolve: {
+    alias: {
+      "@": pathSrc,
+    },
+  },
+  plugins: [
+    vue(),
+    AutoImport({
+      // Auto import functions from Vue, e.g. ref, reactive, toRef...
+      // 自动导入 Vue 相关函数，如：ref, reactive, toRef 等
+      imports: ["vue"],
+      // Auto import functions from Element Plus, e.g. ElMessage, ElMessageBox... (with style)
+      // 自动导入 Element Plus 相关函数，如：ElMessage, ElMessageBox... (带样式)
+      resolvers: [
+        ElementPlusResolver(),
+        // Auto import icon components
+        // 自动导入图标组件
+        IconsResolver({
+          prefix: "Icon",
+        }),
+      ],
+      dts: resolve(pathSrc, "auto-imports.d.ts"),
+    }),
+    Components({
+      resolvers: [
+        // Auto register icon components
+        // 自动注册图标组件
+        IconsResolver({
+          enabledCollections: ["ep"],
+        }),
+        // Auto register Element Plus components
+        // 自动导入 Element Plus 组件
+        ElementPlusResolver(),
+      ],
+      dts: resolve(pathSrc, "auto-imports.d.ts"),
+    }),
+    Icons({
+      autoInstall: true,
+    }),
+    Inspect(),
+  ],
+});
+
+```
+
 ## Submit Standard
 
 - `feat` 增加新功能

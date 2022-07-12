@@ -1,13 +1,17 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from "vue";
 
-defineProps<{ msg: string }>()
+defineProps<{ msg: string }>();
 
-const count = ref(0)
+const count = ref(0);
 </script>
 
 <template>
   <h1>{{ msg }}</h1>
+  <el-icon :size="16" color="#666">
+    <!-- <Edit /> -->
+    <i-ep-edit />
+  </el-icon>
 
   <p>
     Recommended IDE setup:
