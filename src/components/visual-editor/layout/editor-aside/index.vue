@@ -1,5 +1,5 @@
 <template>
-  <el-tabs tab-position="left" style="height: 200px" class="demo-tabs">
+  <el-tabs tab-position="left" class="aside-tabs">
     <el-tab-pane v-for="menu in menuList" :key="menu.id">
       <template #label>
         <el-icon :size="24">
@@ -9,17 +9,28 @@
       </template>
       User
     </el-tab-pane>
-    <el-tab-pane label="Config">Config</el-tab-pane>
-    <el-tab-pane label="Role">Role</el-tab-pane>
-    <el-tab-pane label="Task">Task</el-tab-pane>
   </el-tabs>
 </template>
 
 <script setup lang="ts">
+import components from "../../components/";
+
+const comps = Object.entries(components)
+  .map(([name, component]) => {
+    console.log('====================================');
+    console.log(name);
+    console.log(component);
+    console.log('====================================');
+    const { label, icon, order } = component;
+    return { label, icon, name, order, comp: component };
+  })
+  .sort((a, b) => a.order - b.order);
+console.log(comps);
+
 const menuList = [
   {
     id: "page",
-    icon: 'edit',
+    icon: "document",
     label: "页面",
     content: "页面配置",
   },
@@ -36,14 +47,46 @@ const menuList = [
     content: "业务组件",
   },
 ];
+const baseComp = [
+  {
+    id: "text",
+    lable: "文本",
+    value: "base-text",
+    thumbnail:
+      "https://page-static.oss-cn-qingdao.aliyuncs.com/static/brick/brick_tpl_text.webp",
+  },
+  {
+    id: "image",
+    lable: "图片",
+    value: "base-image",
+    thumbnail:
+      "https://page-static.oss-cn-qingdao.aliyuncs.com/static/brick/brick_tpl_picture.webp",
+  },
+];
 </script>
 
 <style lang="scss" scoped>
-.demo-tabs > .el-tabs__content {
-  padding: 32px;
-  color: #6b778c;
-  font-size: 32px;
-  font-weight: 600;
+.aside-tabs {
+  :deep(.el-tabs__content) {
+    height: 100%;
+  }
+  :deep(.el-tabs__item) {
+    height: 66px;
+    line-height: 24px;
+    @include we-flex(column, center);
+  }
+  .el-tabs__ {
+    &item {
+      @include we-flex(column);
+    }
+    &content {
+      padding: 32px;
+      height: 100%;
+      color: #6b778c;
+      font-size: 32px;
+      font-weight: 600;
+    }
+  }
 }
 
 .el-tabs--right .el-tabs__content,
