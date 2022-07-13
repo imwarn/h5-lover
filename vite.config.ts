@@ -50,7 +50,18 @@ export default defineConfig({
     }),
     Icons({
       autoInstall: true,
+      compiler: "vue3",
     }),
     Inspect(),
   ],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // 全局引入变量和 mixin
+        additionalData: `
+          @import "@/assets/styles/mixin.scss";
+        `,
+      },
+    },
+  },
 });
