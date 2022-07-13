@@ -19,7 +19,6 @@ declare module '@vue/runtime-core' {
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
     HelloWorld: typeof import('./components/HelloWorld.vue')['default']
-    IEpDocument: typeof import('~icons/ep/document')['default']
     VisualEditor: typeof import('./components/visual-editor/index.vue')['default']
   }
 }

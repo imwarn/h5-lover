@@ -3,15 +3,7 @@
     <el-tab-pane v-for="menu in menuList" :key="menu.id">
       <template #label>
         <el-icon :size="24">
-          <!-- <i-ep-document></i-ep-document> -->
-          <!-- <i-ep-document /> -->
-          <!-- <el-icon><AddLocation /></el-icon> -->
-          <component :is="calcComp(menu.icon)" />
-          <!-- <component :is="Icons['edit']" /> -->
-          <!-- {{ calcComp(menu.icon) }}  -->
-          <!-- {{menu.icon}} -->
-          <!-- { resolveDynamicComponent(menu.icon) } -->
-          <!-- <Icon></Icon> -->
+          <component :is="menu.icon" />
         </el-icon>
         <span>{{ menu.label }}</span>
       </template>
@@ -24,18 +16,6 @@
 </template>
 
 <script setup lang="ts">
-import {icons} from '@iconify-json/ep';
-import { resolveDynamicComponent, h } from 'vue'
-const Icons = icons
-console.log('====================================');
-console.log(icons['icons']);
-console.log('====================================');
-const calcComp = computed(() => {
-  return (icon:string) => {
-    // return `i-ep-${icon}`
-    return resolveDynamicComponent(`i-ep-${icon}`)
-  }
-})
 const menuList = [
   {
     id: "page",
